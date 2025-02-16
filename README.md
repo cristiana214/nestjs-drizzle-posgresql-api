@@ -1,6 +1,18 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
+### Database migration
+#### 
+setup .env file ``process.env.DATABASE_URL_POOL``
+schema directory  `src/database/schema.ts`  
+create a new SQL migration file inside src/database/migrations/
+```npx drizzle-kit generate```
+```npx drizzle-kit migrate```
+```npx drizzle-kit push```
+or  run   
+```npm run db:generate```
+```npm run db:migrate```
+```npm run db:push```
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
