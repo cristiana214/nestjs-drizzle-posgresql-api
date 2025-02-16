@@ -2,7 +2,8 @@
 /dist
 /node_modules
 /build
-
+/src/database/migrations
+package-lock.json
 # Logs
 logs
 *.log
