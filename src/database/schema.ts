@@ -56,7 +56,9 @@ export const lessons = pgTable('lessons', {
 
 export const videos = pgTable('videos', {
   id: serial('id').primaryKey(),
-  lessonId: integer('lesson_id').references(() => lessons.id),
+  lessonId: integer('lesson_id')
+    .references(() => lessons.id)
+    .notNull(),
   title: text('title').notNull(),
   url: text('url').notNull(),
   videoUrl: text('video_url').notNull(),
