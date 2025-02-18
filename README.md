@@ -1,17 +1,29 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
-### Database migration
-#### 
-setup .env file ``process.env.DATABASE_URL_POOL``
-schema directory  `src/database/schema.ts`  
-create a new SQL migration file inside src/database/migrations/
+
+
+### NestJS API Drizzle TypeORM, PostGreSQL
+
+#### Database auto migration for production
+#### configuration
+setup .env file ```process.env.DATABASE_URL_POOL```
+
+schema directory  ```src/database/schema.ts```
+
+create a new postgresSQL migration file inside ```src/database/migrations/```
+
 ```npx drizzle-kit generate```
+
 ```npx drizzle-kit migrate```
+
 ```npx drizzle-kit push```
+
 or  run   
 ```npm run db:generate```
+
 ```npm run db:migrate```
+
 ```npm run db:push```
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
@@ -96,16 +108,4 @@ Check out a few resources that may come in handy when working with NestJS:
 - To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
 - Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
