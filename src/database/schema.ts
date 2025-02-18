@@ -56,14 +56,11 @@ export const lessons = pgTable('lessons', {
 
 export const videos = pgTable('videos', {
   id: serial('id').primaryKey(),
-  lessonId: integer('lesson_id')
-    .references(() => lessons.id)
-    .notNull(),
   title: text('title').notNull(),
   url: text('url').notNull(),
   videoUrl: text('video_url').notNull(),
   image: text('image'),
-  content: text('content').notNull(),
+  content: text('content'),
   description: text('description').notNull(),
   seoActive: boolean('seo_active').default(false),
   seoTitle: text('seo_title'),
@@ -71,4 +68,14 @@ export const videos = pgTable('videos', {
   active: boolean('active').default(true),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
+});
+export const videoLessons = pgTable('video_lessons', {
+  videoId: integer('video_id')
+    .references(() => videos.id)
+    .notNull(),
+  lessonId: integer('lesson_id')
+    .references(() => lessons.id)
+    .notNull(),
+  active: boolean('active').default(true),
+  createdAt: timestamp('created_at').defaultNow(),
 });
