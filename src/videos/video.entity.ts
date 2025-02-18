@@ -1,7 +1,7 @@
 export class Video {
   id: number;
 
-  lessonId: number;
+  // lessonId: number;
 
   title: string;
 
@@ -11,7 +11,7 @@ export class Video {
 
   image: string | null;
 
-  content: string;
+  content: string | null;
 
   description: string;
 
