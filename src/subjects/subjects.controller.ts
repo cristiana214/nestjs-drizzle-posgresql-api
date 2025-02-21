@@ -1,4 +1,4 @@
-import { , Controller, Get } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { SubjectsService } from './subjects.service';
 import { Subject } from './subject.entity';
 
@@ -10,5 +10,4 @@ export class SubjectsController {
   getVideos(): Promise<Subject[]> {
     return this.subjectsService.getSubjects();
   }
-  
 }
