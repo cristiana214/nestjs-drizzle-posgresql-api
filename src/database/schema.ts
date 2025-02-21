@@ -8,7 +8,7 @@ import {
 } from 'drizzle-orm/pg-core';
 export const subjects = pgTable('subjects', {
   id: serial('id').primaryKey(),
-  name: text('name').notNull(),
+  title: text('title').notNull(),
   url: text('url').notNull(),
   content: text('content').notNull(),
   image: text('image'),
@@ -26,7 +26,8 @@ export const topics = pgTable('topics', {
   subjectId: integer('subject_id').references(() => subjects.id, {
     onDelete: 'cascade',
   }),
-  name: text('name').notNull(),
+  title: text('title').notNull(),
+  url: text('url'),
   content: text('content').notNull(),
   image: text('image'),
   videoUrl: text('video_url'),
@@ -43,6 +44,7 @@ export const lessons = pgTable('lessons', {
   id: serial('id').primaryKey(),
   topicId: integer('topic_id').references(() => topics.id),
   title: text('title').notNull(),
+  url: text('url').notNull(),
   content: text('content').notNull(),
   image: text('image'),
   description: text('description').notNull(),
