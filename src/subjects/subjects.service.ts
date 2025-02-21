@@ -14,6 +14,7 @@ export class SubjectsService {
       .limit(3)
       .orderBy(desc(subjects.id), desc(subjects.active));
   }
+  //todo
   //get subject by url
   async getSubjectByURL(url: string): Promise<Subject> {
     const data = await db.select().from(subjects).where(eq(subjects.url, url));

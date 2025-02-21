@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { VideosService } from './videos.service';
 import { Video } from './video.entity';
-
+import { GetVideosDto } from './dto/videos.dto';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('videos')
 @Controller('videos')
 export class VideosController {
   constructor(private readonly videosService: VideosService) {}
@@ -13,23 +15,12 @@ export class VideosController {
 
   //retrieve all videos by filters and pagination
   @Get()
-  getVideos(
-    @Query('lessonUrl') lessonUrl?: string,
-    @Query('subjectUrl') subjectUrl?: string,
-    @Query('topicUrl') topicUrl?: string,
-    @Query('pageNum') pageNum = '1',
-    @Query('pageSize') pageSize = '3',
-  ): Promise<Video[]> {
-    const page = Number(pageNum);
-    const size = Number(pageSize);
-    return this.videosService.getVideos(
-      { lessonUrl, subjectUrl, topicUrl },
-      page,
-      size,
-    );
+  getVideos(@Query() query: GetVideosDto): Promise<Video[]> {
+    return this.videosService.getVideos(query);
   }
-  @Get(':url')
-  async getVideosByURL(@Param('url') url = ''): Promise<Video> {
-    return this.videosService.getVideosByURL(url.toString());
-  }
+
+  // @Get(':url')
+  // async getVideosByURL(@Param('url') url = ''): Promise<Video> {
+  //   return this.videosService.getVideosByURL(url.toString());
+  // }
 }

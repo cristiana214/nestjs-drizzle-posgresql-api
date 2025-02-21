@@ -6,6 +6,7 @@ import { db } from '../database/drizzle';
 import { videos } from '../database/schema';
 import { eq } from 'drizzle-orm';
 import { VideosRepository } from './videos.repository';
+import { GetVideosDto } from './dto/videos.dto';
 @Injectable()
 export class VideosService {
   constructor(private readonly videosRepository: VideosRepository) {}
@@ -21,19 +22,20 @@ export class VideosService {
       .returning();
     return newVideo;
   }
-
-  //get all videos by filters with pagination
-  async getVideos(
-    filters: { lessonUrl?: string; subjectUrl?: string; topicUrl?: string },
-    page: number,
-    pageSize: number,
-  ): Promise<Video[]> {
-    return this.videosRepository.findVideos(filters, page, pageSize);
-  }
-
+  //todo
   //get specific video by url
   async getVideosByURL(url: string): Promise<Video> {
     const data = await db.select().from(videos).where(eq(videos.url, url));
     return data?.[0];
+  }
+
+  //get all videos by filters with pagination
+  async getVideos(query: GetVideosDto): Promise<Video[]> {
+    const { pageNum, pageSize, subjectUrl, topicUrl, lessonUrl } = query;
+    return this.videosRepository.findVideos(
+      { subjectUrl, topicUrl, lessonUrl },
+      pageNum,
+      pageSize,
+    );
   }
 }

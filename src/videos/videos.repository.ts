@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
 import { db } from '../database/drizzle'; // Import Drizzle instance
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import {
   videos,
   videoLessons,
@@ -37,10 +37,10 @@ export class VideosRepository {
 
   async findVideos(
     filters: { lessonUrl?: string; subjectUrl?: string; topicUrl?: string },
-    page: number,
+    pageNum: number,
     pageSize: number,
   ): Promise<Video[]> {
-    const offset = (page - 1) * pageSize;
+    const offset = (pageNum - 1) * pageSize;
     let videosQuery;
 
     if (filters.lessonUrl) {
@@ -59,7 +59,10 @@ export class VideosRepository {
         .limit(pageSize)
         .offset(offset);
     } else {
-      videosQuery = this.getBaseQuery().limit(pageSize).offset(offset);
+      videosQuery = this.getBaseQuery()
+        .limit(pageSize)
+        .offset(offset)
+        .orderBy(desc(videos.id));
     }
     const videosResult: Video[] = await videosQuery;
     return videosResult;
