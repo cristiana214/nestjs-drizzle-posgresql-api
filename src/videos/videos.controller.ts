@@ -11,12 +11,22 @@ export class VideosController {
     return this.videosService.create(video);
   }
 
+  //retrieve all videos by filters and pagination
   @Get()
   getVideos(
-    @Query('page') page = '1',
-    @Query('pageSize') pageSize = '10',
+    @Query('lessonUrl') lessonUrl?: string,
+    @Query('subjectUrl') subjectUrl?: string,
+    @Query('topicUrl') topicUrl?: string,
+    @Query('pageNum') pageNum = '1',
+    @Query('pageSize') pageSize = '3',
   ): Promise<Video[]> {
-    return this.videosService.getVideos(parseInt(page), parseInt(pageSize));
+    const page = Number(pageNum);
+    const size = Number(pageSize);
+    return this.videosService.getVideos(
+      { lessonUrl, subjectUrl, topicUrl },
+      page,
+      size,
+    );
   }
   @Get(':url')
   async getVideosByURL(@Param('url') url = ''): Promise<Video> {

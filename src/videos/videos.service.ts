@@ -5,10 +5,12 @@ import { Video } from './video.entity';
 import { db } from '../database/drizzle';
 import { videos } from '../database/schema';
 import { eq } from 'drizzle-orm';
+import { VideosRepository } from './videos.repository';
 @Injectable()
 export class VideosService {
-  private videos: Video[] = [];
+  constructor(private readonly videosRepository: VideosRepository) {}
 
+  // todo
   async create(video: Omit<Video, 'id'>) {
     const [newVideo] = await db
       .insert(videos)
@@ -19,13 +21,17 @@ export class VideosService {
       .returning();
     return newVideo;
   }
-  //get all videos with pagination
-  async getVideos(page: number, pageSize: number): Promise<Video[]> {
-    const offset = (page - 1) * pageSize;
 
-    return await db.select().from(videos).limit(pageSize).offset(offset);
+  //get all videos by filters with pagination
+  async getVideos(
+    filters: { lessonUrl?: string; subjectUrl?: string; topicUrl?: string },
+    page: number,
+    pageSize: number,
+  ): Promise<Video[]> {
+    return this.videosRepository.findVideos(filters, page, pageSize);
   }
-  //get videos by url
+
+  //get specific video by url
   async getVideosByURL(url: string): Promise<Video> {
     const data = await db.select().from(videos).where(eq(videos.url, url));
     return data?.[0];
