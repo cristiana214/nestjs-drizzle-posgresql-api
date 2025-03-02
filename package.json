@@ -23,12 +23,14 @@
     "db:push": "npx drizzle-kit push"
   },
   "lint-staged": {
-    "./src/**/*.{ts,js,jsx,tsx}": [
-      "eslint --ignore-path .gitignore --fix",
-      "prettier --ignore-path .gitignore --write"
+    "**/*.{ts,js,jsx,tsx}": [
+      "eslint --fix --cache",
+      "prettier --write"
     ],
-    "./tests/**/*.ts": [
-      "jest"
+    "**/*.spec.ts": [
+      "eslint --fix --cache",
+      "prettier --write",
+      "jest --bail"
     ]
   },
   "dependencies": {
